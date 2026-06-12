@@ -82,7 +82,7 @@ Data-Pipeline-rynek-pracy-IT/
 ├── loaders/         ← ładowanie plików JSON do warstwy Bronze
 ├── transform/       ← transformacje dbt (staging → intermediate → silver/gold)
 ├── requirements/    ← zależności Python per moduł (wykorzystywane biblioteki)
-└──  docs/           ← dokumentacja techniczna
+└── docs/            ← dokumentacja techniczna
 ```
 
 ---
