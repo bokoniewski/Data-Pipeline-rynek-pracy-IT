@@ -1,4 +1,4 @@
-# Konwencje nazewnicze — Project_job
+# Konwencje nazewnicze — Bazy danych
 
 Dokument opisuje konwencje nazewnicze stosowane dla schematów, tabel, widoków, kolumn i innych obiektów w bazie danych projektu.
 
@@ -58,7 +58,7 @@ Tabele Bronze przechowują surowe dane pobrane bezpośrednio ze źródła. Nazwa
 | Segment | Opis |
 |---|---|
 | `<typ>` | Typ danych: `raw_offers` dla surowych ofert pracy, `audit` dla danych audytowych |
-| `<portal>` | Nazwa portalu źródłowego: `pracuj`, `nofluff`, `joinit`, `protocol` |
+| `<portal>` | Nazwa portalu źródłowego: `pracuj`, `nofluff`, `...` |
 
 **Przykłady:**
 
@@ -66,8 +66,6 @@ Tabele Bronze przechowują surowe dane pobrane bezpośrednio ze źródła. Nazwa
 |---|---|
 | `bronze.raw_offers_pracuj` | Surowe oferty z portalu pracuj.pl |
 | `bronze.raw_offers_nofluff` | Surowe oferty z portalu nofluffjobs.com |
-| `bronze.raw_offers_joinit` | Surowe oferty z portalu justjoin.it |
-| `bronze.raw_offers_protocol` | Surowe oferty z portalu theprotocol.it |
 | `bronze.audit_file_log` | Log plików JSON załadowanych do Bronze |
 
 ---
@@ -87,13 +85,6 @@ Główna tabela ofert oraz tabele szczegółowe z relacją many-to-many do głó
 | `silver.offer_technologies` | Technologie per oferta |
 | `silver.offer_benefits` | Benefity per oferta |
 | `silver.offer_locations` | Lokalizacje per oferta |
-| `silver.offer_modes` | Tryby pracy per oferta |
-| `silver.offer_levels` | Poziomy stanowiska per oferta |
-| `silver.offer_contracts` | Typy umów per oferta |
-| `silver.offer_requirements` | Wymagania per oferta |
-| `silver.offer_responsibilities` | Zakres obowiązków per oferta |
-| `silver.offer_specs` | Specjalizacje IT per oferta |
-| `silver.offer_schedules` | Harmonogram pracy per oferta |
 
 **Tabele słownikowe** — wzorzec: `def_<nazwa>`
 
@@ -118,11 +109,6 @@ Tabele wymiarów zaczynają się od prefiksu `d_` (od dimension). Każda tabela 
 | `gold.d_specs` | Wymiar specjalizacji IT |
 | `gold.d_level` | Wymiar poziomu doświadczenia (Junior/Mid/Senior/Expert) |
 | `gold.d_mode` | Wymiar trybu pracy (Zdalnie/Hybrydowo/Biuro) |
-| `gold.d_contract` | Wymiar typu umowy (B2B/UoP/Zlecenie) |
-| `gold.d_technology` | Wymiar technologii |
-| `gold.d_benefit` | Wymiar benefitów |
-| `gold.d_location` | Wymiar lokalizacji (miasto, region, kraj) |
-| `gold.d_requirement_type` | Wymiar typu wymagalności (wymagane/opcjonalne) |
 
 ---
 
@@ -195,11 +181,6 @@ Widoki sprawdzające poprawność wgranych danych. Używane przez system raporto
 | `silver.v_test_data_offer_benefits` | silver | Benefity niepasujące do wzorców z `gold.d_benefit` |
 | `silver.v_test_data_offer_contracts` | silver | Typy umów niepasujące do `gold.d_contract` |
 | `silver.v_test_data_offer_levels` | silver | Poziomy stanowisk niepasujące do `gold.d_level` |
-| `silver.v_test_data_offer_modes` | silver | Tryby pracy niepasujące do `gold.d_mode` |
-| `silver.v_test_data_offer_salaries` | silver | Wynagrodzenia z brakującymi lub niepoprawnymi danymi |
-| `silver.v_test_data_offer_schedules` | silver | Harmonogramy z niepoprawnymi wartościami |
-| `silver.v_test_data_offer_specs` | silver | Specjalizacje niepasujące do `gold.d_specs` |
-| `silver.v_test_data_offer_tech` | silver | Technologie niepasujące do wzorców z `gold.d_technology` |
 
 ---
 
@@ -225,8 +206,6 @@ Widoki używane przez moduł raportowy do pobierania informacji o przestrzeni dy
 |---|---|
 | `maintenance.v_bronze_obj_sizes` | Rozmiary obiektów w schemacie bronze |
 | `maintenance.v_silver_obj_sizes` | Rozmiary obiektów w schemacie silver |
-| `maintenance.v_gold_obj_sizes` | Rozmiary obiektów w schemacie gold |
-| `maintenance.v_total_obj_sizes` | Łączne rozmiary per schemat |
 
 ---
 
@@ -252,11 +231,6 @@ id  SERIAL  PRIMARY KEY
 | `gold.d_level` | `d_level_id` |
 | `gold.d_mode` | `d_mode_id` |
 | `gold.d_contract` | `d_contract_id` |
-| `gold.d_technology` | `d_tech_id` |
-| `gold.d_benefit` | `d_benefit_id` |
-| `gold.d_location` | `d_location_id` |
-| `gold.d_specs` | `d_spec_id` |
-| `gold.d_requirement_type` | `d_req_type_id` |
 
 ---
 

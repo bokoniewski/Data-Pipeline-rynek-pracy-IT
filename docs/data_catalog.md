@@ -1,4 +1,4 @@
-# Katalog danych — Project_job
+# Katalog danych — Data-Pipeline-rynek-pracy-IT
 
 Dokument opisuje wszystkie obiekty bazodanowe projektu — tabele, widoki, procedury i funkcje we wszystkich schematach. Dane zorganizowane są warstwowo zgodnie z architekturą Medallion.
 

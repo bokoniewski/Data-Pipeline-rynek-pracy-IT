@@ -1,4 +1,4 @@
-# Konwencje nazewnicze — dbt (transform/)
+# Konwencje nazewnicze — dbt
 
 Dokument opisuje konwencje nazewnicze stosowane dla modeli, plików i zmiennych w projekcie dbt znajdującym się w folderze `transform/project_job/`.
 
