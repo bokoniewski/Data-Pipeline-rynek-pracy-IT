@@ -74,10 +74,12 @@ parsed AS (
 
         -- period: miesięcznie lub godzinowo
         CASE
-            WHEN salary_item ILIKE '%godz%'  THEN 'HOURLY'
-            WHEN salary_item ILIKE '%hr.%'   THEN 'HOURLY'
-            WHEN salary_item ILIKE '%mies%'  THEN 'MONTHLY'
-            WHEN salary_item ILIKE '%mth%'   THEN 'MONTHLY'
+            WHEN salary_item ILIKE '%godz%'   THEN 'HOURLY'
+            WHEN salary_item ILIKE '%hr.%'    THEN 'HOURLY'
+            WHEN salary_item ILIKE '%mies%'   THEN 'MONTHLY'
+            WHEN salary_item ILIKE '%mth%'    THEN 'MONTHLY'
+            WHEN salary_item ILIKE '%dzien%'  THEN 'DAILY'
+            WHEN salary_item ILIKE '%rocz%'   THEN 'ANNUALLY'
             ELSE NULL
         END                                                     AS period_raw,
 
@@ -86,7 +88,7 @@ parsed AS (
         NULLIF(TRIM(
             REGEXP_REPLACE(
                 COALESCE(
-                    SUBSTRING(salary_item FROM '\(([^)]+)\)\s*(?:miesięcznie|mth|godz|hr\.)?$'),
+                    SUBSTRING(salary_item FROM '\(([^)]+)\)[^(]*$'),
                     ''
                 ),
                 '\s+', ' ', 'g'
@@ -117,11 +119,12 @@ corrected AS (
         salary_type,
 
         CASE
-            --WHEN salary_min_raw < 1000   							THEN 'HOURLY'
-            WHEN period_raw = 'HOURLY' and salary_min_raw < 1000  	THEN 'HOURLY'
-            WHEN period_raw = 'MONTHLY' 							THEN 'MONTHLY'
+            WHEN period_raw = 'HOURLY' AND salary_min_raw < 1000  		THEN 'HOURLY'
+            WHEN period_raw = 'MONTHLY' AND salary_min_raw >= 1000      THEN 'MONTHLY'
+            WHEN period_raw = 'DAILY'                             		THEN 'DAILY'
+            WHEN period_raw = 'ANNUALLY' AND salary_min_raw >= 30000    THEN 'ANNUALLY'
             ELSE NULL
-        END                                                     AS period
+        END
 
     FROM parsed
     WHERE salary_min_raw IS NOT NULL
